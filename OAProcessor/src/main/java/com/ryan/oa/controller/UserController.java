@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -24,6 +25,8 @@ import com.ryan.oa.utils.UserUtils;
 @Controller
 public class UserController {
 
+	@Autowired
+	private User user;
 	@RequestMapping(value = "/userLogin", produces = { "application/json;charset=UTF-8" })
 	@ResponseBody
 	public User userLogin(HttpServletRequest request,
@@ -33,12 +36,13 @@ public class UserController {
 		String sloginId = request.getParameter("loginId");
 		String userPwd = request.getParameter("userPwd");
 		System.out.println(sloginId + userPwd);
-		User user = null;
+		
+		//User user = null;
 		if (UserUtils.userLogin(sloginId, userPwd)) {
 			user = UserUtils.getUserInfo(sloginId);
-		} else {
+		} /*else {
 			user = new User();
-		}
+		}*/
 		// String str = gs.toJson(user);
 		return user;
 	}
@@ -49,7 +53,7 @@ public class UserController {
 			HttpServletResponse response, HttpSession session) {
 		// Gson gs = new Gson();
 		String sloginId = request.getParameter("loginId");
-		User user = null;
+		//User user = null;
 		user = UserUtils.getUserInfo(sloginId);
 		// String str = gs.toJson(user);
 		return user;
@@ -81,7 +85,7 @@ public class UserController {
         }
 		Gson gs = new GsonBuilder()
 		   .setDateFormat("yyyy-MM-dd").create();
-		User user = gs.fromJson(result, User.class);
+		user = gs.fromJson(result, User.class);
 		return UserUtils.changePwd(user);
 	}
 }

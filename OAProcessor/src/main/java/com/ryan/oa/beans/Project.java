@@ -3,6 +3,8 @@ package com.ryan.oa.beans;
 import java.sql.Date;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
+@Service
 public class Project {
 	private int projectId = 99999999;
 	private String projectSub = "99999999";

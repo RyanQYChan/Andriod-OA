@@ -16,5 +16,11 @@
 %>
 <h1><%=outMsg %></h1>
 <h2><a href="test">test</a></h2>
+<form action="getUserInfo" method = 'POST'>
+<input type="text" name="loginId"/>
+<!-- <input type="text" name="userPwd"/> -->
+<input type="submit" value="Submit" />
+
+</form>
 </body>
 </html>

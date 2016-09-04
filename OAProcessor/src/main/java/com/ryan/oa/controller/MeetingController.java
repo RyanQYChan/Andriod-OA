@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,6 +28,8 @@ import com.ryan.oa.utils.MeetingUtils;
 @Controller
 public class MeetingController {
 
+	@Autowired
+	private Meeting mt;
 	@RequestMapping(value="/retrieveRoomList",produces = {"application/json;charset=UTF-8"})
 	@ResponseBody
 	public String retrieveRoomList(HttpServletRequest request,
@@ -48,7 +51,7 @@ public class MeetingController {
 		}
 		System.out.println(result);
 		Gson gs = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-		Meeting mt = gs.fromJson(result, Meeting.class);
+		mt = gs.fromJson(result, Meeting.class);
 		ArrayList<Room> al = new ArrayList<Room>();
 		al = CommonUtils.retrieveRoomList(mt);
 		
@@ -73,7 +76,7 @@ public class MeetingController {
 	public Meeting retrieveMeetingDetail(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session) {
 		String meetingId = request.getParameter("meetingId");
-		Meeting mt = MeetingUtils.retrieveMeetingDetail(meetingId);
+		mt = MeetingUtils.retrieveMeetingDetail(meetingId);
 		return mt;
 	}
 
@@ -93,7 +96,7 @@ public class MeetingController {
         }
 		System.out.println(result);
 		Gson gs = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-		Meeting mt = gs.fromJson(result, Meeting.class);
+		mt = gs.fromJson(result, Meeting.class);
 		return MeetingUtils.addMeeting(mt);
 	}
 
@@ -121,7 +124,7 @@ public class MeetingController {
         }
 		System.out.println(result);
 		Gson gs = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-		Meeting mt = gs.fromJson(result, Meeting.class);
+		mt = gs.fromJson(result, Meeting.class);
 		return MeetingUtils.updateMeeting(mt);
 	}
 }

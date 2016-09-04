@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -26,6 +27,11 @@ import com.ryan.oa.utils.MeetingUtils;
 
 @Controller
 public class ChatController {
+	@Autowired
+	private Chat chat;
+	@Autowired
+	private ChatMsg chatMsg;
+	
 	@RequestMapping(value = "/sendMessage", produces = { "application/json;charset=UTF-8" })
 	@ResponseBody
 	public boolean sendMessage(HttpServletRequest request,
@@ -51,9 +57,9 @@ public class ChatController {
 		System.out.println(result);
 		Gson gs = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss")
 				.create();
-		ChatMsg ct = gs.fromJson(result, ChatMsg.class);
-		System.out.println(ct.getMsgContent());
-		return ChatUtils.sendMessage(ct);
+		chatMsg = gs.fromJson(result, ChatMsg.class);
+		System.out.println(chatMsg.getMsgContent());
+		return ChatUtils.sendMessage(chatMsg);
 	}
 
 	@RequestMapping(value = "/retrieveChatList", produces = { "application/json;charset=UTF-8" })
@@ -84,8 +90,6 @@ public class ChatController {
 		while (null != (line = br.readLine())) {
 			result += line;
 		}
-		Chat chat = new Chat();
-
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss")
 				.create();
 		chat = gson.fromJson(result, Chat.class);
@@ -105,8 +109,6 @@ public class ChatController {
 		while (null != (line = br.readLine())) {
 			result += line;
 		}
-		Chat chat = new Chat();
-
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss")
 				.create();
 		chat = gson.fromJson(result, Chat.class);
@@ -128,8 +130,6 @@ public class ChatController {
 			result += line;
 		}
 		System.out.println(result);
-		Chat chat = new Chat();
-
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss")
 				.create();
 		chat = gson.fromJson(result, Chat.class);
@@ -137,7 +137,7 @@ public class ChatController {
 	}
 	@RequestMapping(value = "/retrieveChatMsgList", produces = { "application/json;charset=UTF-8" })
 	@ResponseBody
-	public static String retrieveChatMsgList(HttpServletRequest request,
+	public  String retrieveChatMsgList(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session)
 			throws IOException {
 		InputStream is = null;
@@ -151,9 +151,9 @@ public class ChatController {
 		}
 		Gson gs = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss")
 				.create();
-		Chat ct = gs.fromJson(result, Chat.class);
+		chat = gs.fromJson(result, Chat.class);
 		ArrayList<ChatMsg> al = new ArrayList<ChatMsg>();
-		al = ChatUtils.retrieveChatMsgList(ct);
+		al = ChatUtils.retrieveChatMsgList(chat);
 		result = gs.toJson(al, new TypeToken<ArrayList<ChatMsg>>() {
 		}.getType());
 		return result;

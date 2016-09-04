@@ -1,5 +1,8 @@
 package com.ryan.oa.beans;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class User {
 
 	private int loginId = 99999999;

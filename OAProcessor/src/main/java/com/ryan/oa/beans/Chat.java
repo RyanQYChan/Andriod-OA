@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Map;
 
+import org.springframework.stereotype.Service;
+@Service
 public class Chat {
 	private int chatId = 99999999;
 	private int ownerId = 99999999 ;

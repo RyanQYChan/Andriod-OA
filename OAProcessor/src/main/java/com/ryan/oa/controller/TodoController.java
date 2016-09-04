@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,6 +22,8 @@ import com.ryan.oa.beans.Todo;
 import com.ryan.oa.utils.TodoUtils;
 @Controller
 public class TodoController {
+	@Autowired
+	private Todo td;
 	@RequestMapping(value="/retrieveTodoList",produces = {"application/json;charset=UTF-8"})
 	@ResponseBody
 	public ArrayList<Todo> retrieveTodoist(HttpServletRequest request,HttpServletResponse response,HttpSession session){
@@ -33,7 +36,7 @@ public class TodoController {
 	@ResponseBody
 	public Todo retrieveTodoDetail(HttpServletRequest request,HttpServletResponse response,HttpSession session){
 		String todoId = request.getParameter("todoId");
-		Todo td = TodoUtils.retrieveTodoDetail(todoId);
+		td = TodoUtils.retrieveTodoDetail(todoId);
 		return td;
 	}
 	@RequestMapping(value="/addTodo",produces = {"application/json;charset=UTF-8"})
@@ -50,7 +53,7 @@ public class TodoController {
         }
 		Gson gs = new GsonBuilder()
 		   .setDateFormat("yyyy-MM-dd").create();
-		Todo td = gs.fromJson(result, Todo.class);
+		td = gs.fromJson(result, Todo.class);
 		System.out.println("addTodo"+result);
 		return TodoUtils.addTodo(td);
 	}
@@ -75,7 +78,7 @@ public class TodoController {
         }
 		Gson gs = new GsonBuilder()
 		   .setDateFormat("yyyy-MM-dd").create();
-		Todo td = gs.fromJson(result, Todo.class);
+		td = gs.fromJson(result, Todo.class);
 		return TodoUtils.updateTodo(td);
 	}
 }

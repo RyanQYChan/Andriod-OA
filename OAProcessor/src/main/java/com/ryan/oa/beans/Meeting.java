@@ -3,6 +3,8 @@ package com.ryan.oa.beans;
 import java.sql.Timestamp;
 import java.util.Date;
 
+import org.springframework.stereotype.Service;
+@Service
 public class Meeting {
 	private int meetingId = 99999999;
 	private String meetingSub = "99999999";

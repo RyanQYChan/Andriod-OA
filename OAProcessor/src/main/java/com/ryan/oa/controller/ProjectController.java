@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +23,8 @@ import com.ryan.oa.utils.ProjectUtils;
 
 @Controller
 public class ProjectController {
+	@Autowired
+	private Project pj;
 	@RequestMapping(value="/retrieveProjectList",produces = {"application/json;charset=UTF-8"})
 	@ResponseBody
 	public ArrayList<Project> retrieveProjectList(HttpServletRequest request,
@@ -37,7 +40,7 @@ public class ProjectController {
 	public Project retrieveProjectDetail(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session) {
 		String projectId = request.getParameter("projectId");
-		Project pj = ProjectUtils.retrieveProjectDetail(projectId);
+		pj = ProjectUtils.retrieveProjectDetail(projectId);
 		return pj;
 	}
 
@@ -63,7 +66,7 @@ public class ProjectController {
 		}
 		System.out.println(result);
 		Gson gs = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-		Project pj = gs.fromJson(result, Project.class);
+		pj = gs.fromJson(result, Project.class);
 		return ProjectUtils.addProject(pj);
 	}
 
@@ -98,7 +101,7 @@ public class ProjectController {
 		}
 		System.out.println(result);
 		Gson gs = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-		Project pj = gs.fromJson(result, Project.class);
+		pj = gs.fromJson(result, Project.class);
 		return ProjectUtils.updateProject(pj);
 	}
 }

@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,6 +24,8 @@ import com.ryan.oa.utils.LeaveUtils;
 
 @Controller
 public class LeaveController {
+	@Autowired
+	private Leave lv;
 	@RequestMapping(value = "/retrieveMyLeaveList", produces = { "application/json;charset=UTF-8" })
 	@ResponseBody
 	public String retrieveLeaveist(HttpServletRequest request,
@@ -54,7 +57,7 @@ public class LeaveController {
 	public Leave retrieveLeaveDetail(HttpServletRequest request,
 			HttpServletResponse response, HttpSession session) {
 		String leaveId = request.getParameter("leaveId");
-		Leave lv = LeaveUtils.retrieveLeaveDetail(leaveId);
+		lv = LeaveUtils.retrieveLeaveDetail(leaveId);
 		return lv;
 	}
 
@@ -73,7 +76,7 @@ public class LeaveController {
 			result += line;
 		}
 		Gson gs = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-		Leave lv = gs.fromJson(result, Leave.class);
+		lv = gs.fromJson(result, Leave.class);
 		System.out.println("addLeave" + result);
 		return LeaveUtils.addLeave(lv);
 	}
@@ -102,7 +105,7 @@ public class LeaveController {
 			result += line;
 		}
 		Gson gs = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-		Leave lv = gs.fromJson(result, Leave.class);
+		lv = gs.fromJson(result, Leave.class);
 		return LeaveUtils.updateLeave(lv);
 	}
 

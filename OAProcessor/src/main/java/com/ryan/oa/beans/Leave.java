@@ -2,6 +2,8 @@ package com.ryan.oa.beans;
 
 import java.sql.Date;
 
+import org.springframework.stereotype.Service;
+@Service
 public class Leave {
 
 	private int leaveId = 99999999;
